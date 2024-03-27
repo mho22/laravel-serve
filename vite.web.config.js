@@ -11,9 +11,6 @@ export default defineConfig( {
     ],
     server : {
         host : "localhost",
-        port : 5173,
-        watch : {
-            ignored : [ "**/node_modules/**", "**/vendor/**", "**/tauri/**" ]
-        }
+        port : 5173
     }
 } );

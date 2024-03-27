@@ -1,14 +1,14 @@
 {
-    "productName" : "Laravel Wisdom",
+    "productName" : "Laravel Serve",
     "version" : "0.0.0",
-    "identifier" : "codes.capsules.wisdom",
+    "identifier" : "codes.capsules.serve",
     "build" : {
         "devUrl" : "http://localhost:2222",
         "frontendDist" : "../public"
     },
     "app" : {
         "windows" : [ {
-            "title" : "Wisdom",
+            "title" : "Laravel Serve",
             "width" : 1280,
             "height" : 720
         } ],
