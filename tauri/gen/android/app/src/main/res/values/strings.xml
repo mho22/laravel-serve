@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Laravel Wisdom</string>
+    <string name="main_activity_title">Laravel Wisdom</string>
+</resources>
