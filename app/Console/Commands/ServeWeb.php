@@ -20,15 +20,15 @@ class ServeWeb extends Command
 
     public function handle() : void
     {
-        $this->getOutput()->isVerbose() ? $this->runComand( 'ports:clear' ) : $this->callSilently( 'ports:clear' );
+        $this->getOutput()->isVerbose() ? $this->call( 'ports:clear' ) : $this->callSilently( 'ports:clear' );
 
         intro( 'Running Web Environment' );
 
         note( "Starting PHP Server" );
 
-        Process::run( "npm run serve", function( string $type, string $output )
+        Process::run( "php artisan serve --port=2222", function( string $type, string $output )
         {
-            if( ! isset( $this->vite ) && Str::contains( $output, "PHP" ) )
+            if( ! isset( $this->vite ) && Str::contains( $output, "2222" ) )
             {
                 note( "Starting Vite Development Server" );
 
@@ -36,11 +36,11 @@ class ServeWeb extends Command
                 {
                     if( Str::contains( $output, 'APP_URL' ) ) return info( $output );
 
-                    if( $this->getOutput()->isVerbose() ) note( $output );
+                    if( $type == 'err' || $this->getOutput()->isVerbose() ) note( $output );
                 } );
             }
 
-            if( $this->getOutput()->isVerbose() ) note( $output );
+            if( $type == 'err' || $this->getOutput()->isVerbose() ) note( $output );
         } );
     }
 }

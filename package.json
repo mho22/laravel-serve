@@ -8,15 +8,11 @@
         "dev:tauri:desktop" : "tauri dev",
         "dev:tauri:mobile:android" : "tauri android dev",
         "dev:tauri:mobile:ios" : "tauri ios dev",
-        "tauri" : "tauri",
-        "php" : "php",
-        "serve" : "serve",
-        "composer" : "php --disable-functions vendor/bin/composer"
+        "tauri" : "tauri"
     },
     "dependencies" : {
         "@tauri-apps/api" : ">=2.0.0-beta.6",
-        "@tauri-apps/plugin-shell" : ">=2.0.0-beta.2",
-        "browser-php" : "^0.4.1"
+        "@tauri-apps/plugin-shell" : ">=2.0.0-beta.2"
     },
     "devDependencies" : {
         "laravel-vite-plugin" : "^1.0.2",
