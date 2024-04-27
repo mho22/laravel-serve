@@ -34,3 +34,5 @@ The Laravel Serve package offers a collection of artisan commands for running yo
 
 4. Initiate Installation process
 5. Implement mandatory and subsidiary ENV variables
+6. Copy mobile icons in generated mobile directories
+7. Generate default colors in generated mobile directories

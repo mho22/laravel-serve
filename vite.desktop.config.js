@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 
@@ -11,7 +11,7 @@ export default defineConfig( {
     ],
     clearScreen : false,
     server : {
-        port : 5173,
+        port : 50004,
         strictPort : true,
     }
 } );

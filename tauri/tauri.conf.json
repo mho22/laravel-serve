@@ -3,14 +3,14 @@
     "version" : "0.0.0",
     "identifier" : "codes.capsules.serve",
     "build" : {
-        "devUrl" : "http://localhost:2222",
+        "devUrl" : "http://localhost:50002",
         "frontendDist" : "../public"
     },
     "app" : {
         "windows" : [ {
             "title" : "Laravel Serve",
-            "width" : 1280,
-            "height" : 720
+            "width" : 800,
+            "height" : 600
         } ],
         "security" : {
             "csp" : null

@@ -16,9 +16,6 @@ class ServeMobile extends Command
 {
     protected $signature = 'mobile:serve {--android} {--ios}';
 
-    private $vite;
-    private $tauri;
-
 
     public function handle()
     {
@@ -28,48 +25,47 @@ class ServeMobile extends Command
 
         intro( 'Running Mobile Environment' );
 
+        $this->initTauriServer();
+        $this->initViteServer();
+        $this->initPHPServer();
+    }
+
+
+    private function initTauriServer() : void
+    {
+        $device = $this->option( 'ios' ) ? 'ios' : 'android';
+
+        note( Str::headline( "Starting Mobile {$device} App" ) );
+
+        if( ! File::exists( base_path( 'tauri/target' ) ) )
+        {
+            Process::path( 'tauri' )->forever()->tty()->run( "cargo build" );
+        }
+
+        if( ! File::exists( base_path( "tauri/gen/{$device}" ) ) )
+        {
+            Process::forever()->tty()->run( "npm run tauri {$device} init" );
+        }
+
+        if( ! File::exists( base_path( 'tauri/icons' ) ) )
+        {
+            Process::forever()->tty()->run( "npm run tauri icon tauri/icon.png" );
+        }
+
+        Process::tty()->start( "npm run dev:tauri:mobile:{$device} -- --port=50005" );
+    }
+
+    private function initViteServer() : void
+    {
+        note( "Starting Vite Development Server" );
+
+        Process::start( "npm run dev:vite:mobile" );
+    }
+
+    private function initPHPServer() : void
+    {
         note( "Starting PHP Server" );
 
-        Process::run( "php artisan serve --host='192.168.0.10' --port=2222" , function( string $type, string $output )
-        {
-            if( ! isset( $this->vite ) && Str::contains( $output, "2222" ) )
-            {
-                note( "Starting Vite Development Server" );
-
-                $this->vite = Process::forever()->run( "npm run dev:vite:mobile", function( string $type, string $output )
-                {
-                    if( ! isset( $this->tauri ) && Str::contains( $output, 'APP_URL' ) )
-                    {
-                        $device = $this->option( 'ios' ) ? 'ios' : 'android';
-
-                        note( Str::headline( "Starting Mobile {$device} App" ) );
-
-                        if( ! File::exists( base_path( 'tauri/target' ) ) )
-                        {
-                            Process::path( 'tauri' )->forever()->run( "cargo build", function( string $type, string $output ){ if( $type == 'err' || $this->getOutput()->isVerbose() ) note( $output ); } );
-                        }
-
-                        if( ! File::exists( base_path( 'tauri/icons' ) ) )
-                        {
-                            Process::run( "npm run tauri icon tauri/icon.png", function( string $type, string $output ){ if( $type == 'err' || $this->getOutput()->isVerbose() ) note( $output ); } );
-                        }
-
-                        if( ! File::exists( base_path( "tauri/gen/{$device}" ) ) )
-                        {
-                            Process::run( "npm run tauri {$device} init", function( string $type, string $output ){ if( $type == 'err' || $this->getOutput()->isVerbose() ) note( $output ); } );
-                        }
-
-                        $this->tauri = Process::forever()->tty()->run( "npm run dev:tauri:mobile:{$device}", function( string $type, string $output )
-                        {
-                            if( ! Str::startsWith( json_encode( $output ), '"\n> ' ) ) note( $output );
-                        } );
-                    }
-
-                    if( $type == 'err' || $this->getOutput()->isVerbose() ) note( $output );
-                } );
-            }
-
-            if( $type == 'err' || $this->getOutput()->isVerbose() ) note( $output );
-        } );
+        Process::forever()->tty()->run( "php artisan serve --host='192.168.0.9' --port=50002" );
     }
 }

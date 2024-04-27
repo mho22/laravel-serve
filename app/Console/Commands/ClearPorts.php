@@ -17,7 +17,7 @@ class ClearPorts extends Command
     {
         intro( 'Clearing ports' );
 
-        $ports = $this->argument( 'port' ) ?: [ 5173, 2222 ];
+        $ports = $this->argument( 'port' );
 
         foreach( $ports as $port )
         {

@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 
@@ -12,12 +12,12 @@ export default defineConfig( {
     clearScreen : false,
     server : {
         host : "0.0.0.0",
-        port : 5173,
+        port : 50007,
         strictPort : true,
         hmr : {
             protocol : 'ws',
-            host : "192.168.0.10",
-            port : 5183,
+            host : "192.168.0.9",
+            port : 50008,
         },
     }
 } );
